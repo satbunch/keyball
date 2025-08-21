@@ -1,0 +1,185 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+config.h
+keymap.c
+rules.mk
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="config.h">
+/*
+This is the c configuration file for the keymap
+
+Copyright 2022 @Yowkees
+Copyright 2022 MURAOKA Taro (aka KoRoN, @kaoriya)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+#pragma once
+
+#ifdef RGBLIGHT_ENABLE
+//#    define RGBLIGHT_EFFECT_BREATHING
+//#    define RGBLIGHT_EFFECT_RAINBOW_MOOD
+//#    define RGBLIGHT_EFFECT_RAINBOW_SWIRL
+//#    define RGBLIGHT_EFFECT_SNAKE
+//#    define RGBLIGHT_EFFECT_KNIGHT
+//#    define RGBLIGHT_EFFECT_CHRISTMAS
+#    define RGBLIGHT_EFFECT_STATIC_GRADIENT
+//#    define RGBLIGHT_EFFECT_RGB_TEST
+//#    define RGBLIGHT_EFFECT_ALTERNATING
+//#    define RGBLIGHT_EFFECT_TWINKLE
+#endif
+
+#define TAP_CODE_DELAY 5
+
+#define POINTING_DEVICE_AUTO_MOUSE_ENABLE
+#define AUTO_MOUSE_DEFAULT_LAYER 1
+
+#define KEYBALL_CPI_OPTIONS { 800 }
+#define KEYBALL_CPI_DEFAULT 0
+</file>
+
+<file path="keymap.c">
+/*
+Copyright 2022 @Yowkees
+Copyright 2022 MURAOKA Taro (aka KoRoN, @kaoriya)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+#include QMK_KEYBOARD_H
+
+#include "quantum.h"
+
+enum layer_names { 
+  _BASE,
+  _FIRST,
+  _SECOND,
+  _THRID,
+};
+
+// clang-format off
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+  // keymap for default (VIA)
+  [_BASE] = LAYOUT_universal(
+    KC_ESC   , KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,                                        KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , KC_MINS   ,
+    KC_TAB   , KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,                                        KC_H     , KC_J     , KC_K     , KC_L     , LT(_THRID,KC_SCLN)  , KC_QUOT  ,
+    KC_LCTL  , KC_Z     , KC_X     , KC_C     , KC_V     , KC_B     ,                                        KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_SLSH  , KC_BSLS  ,
+              KC_LALT,KC_LGUI,   LT(_FIRST,KC_INT5),LSFT_T(KC_SPC),KC_INT4,                  KC_BSPC,LT(_SECOND,KC_ENT), RCTL_T(KC_LNG2),     KC_RALT  , KC_PSCR
+  ),
+
+  [_FIRST] = LAYOUT_universal(
+    _______ ,LSFT(KC_1),LSFT(KC_2),LSFT(KC_3),LSFT(KC_4),LSFT(KC_5),                                        LSFT(KC_6),LSFT(KC_7)   ,LSFT(KC_8)   ,LSFT(KC_9)   ,LSFT(KC_0),_______  ,
+    _______ , KC_GRV   ,LSFT(KC_GRV), _______, _______  , KC_PPLS  ,                                         KC_EQL   ,LSFT(KC_LBRC),LSFT(KC_RBRC), KC_LBRC     , KC_RBRC  , _______  ,
+    _______ ,  _______ , _______   , _______ , _______  , KC_PSLS  ,                                         _______  ,LSFT(KC_MINS),LSFT(KC_COMM),LSFT(KC_DOT) , _______  , _______  ,
+                  _______  , _______ , _______  ,         _______  , _______  ,                   _______  , _______  , _______       , _______  , _______
+  ),
+
+  [_SECOND] = LAYOUT_universal(
+    _______  , _______  , KC_7     , KC_8    , KC_9     , KC_SLSH  ,                                         _______  , _______  , _______  , _______  , _______  , _______  ,
+    _______  , _______  , KC_4     , KC_5    , KC_6     , KC_DOT   ,                                         KC_LEFT  , KC_DOWN  , KC_UP    , KC_RGHT  , _______  , _______  ,
+    _______  , _______  , KC_1     , KC_2    , KC_3     , KC_0     ,                                         _______  , _______  , _______  , _______  , _______  , _______  ,
+                  KC_0     , KC_DOT  , _______  ,         _______  , _______  ,                   KC_DEL   , _______  , _______       , _______  , _______
+  ),
+
+  [_THRID] = LAYOUT_universal(
+    KC_F1    , KC_F2    , KC_F3    , KC_F4    , KC_F5    , KC_F6    ,                                        _______  , _______  , _______  , _______  , _______  , EE_CLR   ,
+    KC_F7    , KC_F8    , KC_F9    , KC_F10   , KC_F11   , KC_F12   ,                                        _______  , KC_BTN1  , SCRL_MO  , KC_BTN2  , _______  , _______  ,
+    _______  , _______  , _______  , _______  , _______  , _______  ,                                        _______  , _______  , _______  , _______  , _______  , _______  ,
+                  _______  , _______  , _______  ,        _______  , _______  ,                   _______  , _______  , _______       , KBC_RST  , QK_BOOT
+  ),
+};
+// clang-format on
+
+// layer_state_t layer_state_set_user(layer_state_t state) {
+//     // Auto enable scroll mode when the highest layer is 3
+//     keyball_set_scroll_mode(get_highest_layer(state) == 3);
+//     return state;
+// }
+
+#ifdef OLED_ENABLE
+
+#    include "lib/oledkit/oledkit.h"
+
+void oledkit_render_info_user(void) {
+    keyball_oled_render_keyinfo();
+    keyball_oled_render_ballinfo();
+    keyball_oled_render_layerinfo();
+}
+#endif
+</file>
+
+<file path="rules.mk">
+RGBLIGHT_ENABLE = yes
+
+OLED_ENABLE = yes
+
+VIA_ENABLE = yes
+</file>
+
+</files>
